@@ -33,11 +33,11 @@ $("#add-train-btn").on("click", function(event) {
     database.ref().push(newTrn);
 
     // LOG ALL THE THINGS
-    console.log(newTrn);
-    console.log(newTrn.name);
-    console.log(newTrn.destination);
-    console.log(newTrn.start);
-    console.log(newTrn.frequency);
+    // console.log(newTrn);
+    // console.log(newTrn.name);
+    // console.log(newTrn.destination);
+    // console.log(newTrn.start);
+    // console.log(newTrn.frequency);
 
     // Clear Form Text-Boxes
     $("#train-name-input").val("");
@@ -62,5 +62,33 @@ database.ref().on("child_added",function(childSnapshot) {
     console.log("Database: " + trnFirst);
     console.log("Database: " + trnFreq);
 
-    Make 
+    // Calculate Next Arrival
+
+    // Push value of trnFirst back a year to ensure it's before current time, NECESSARY?
+    var trnFirstCnvrt = moment(trnFirst, "X").subtract(1,"years");
+    // UNSURE IF WORKING APPROPRIATELY
+    console.log("1 Yr Back= " + trnFirstCnvrt);
+
+    // Current Time
+    var currentTime = moment();
+    console.log("CURRENTLY: " + moment(currentTime).format("X"));
+
+    // Difference Between Times
+    var timeDiff = moment().diff(moment(trnFirstCnvrt), "minutes");
+    console.log("DIFFERENCE IN TIME: " + timeDiff);
+
+    // Time Apart
+    var tRemainder = moment(timeDiff).format("minutes") % trnFreq;
+    // Console shows NaN
+    console.log(tRemainder);
+
+    // Minutes Until Arrival
+    var minutesTillArrival = trnFreq - tRemainder;
+    console.log("MINUTES TILL TRAIN: " + minutesTillArrival);
+
+    // Next Train
+    var nxtTrain = moment().add(minutesTillArrival, "minutes");
+    console.log("ARRIVAL TIME: " + moment(nxtTrain).format("HH:mm"));
+
+
 });
