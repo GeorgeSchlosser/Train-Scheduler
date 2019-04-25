@@ -45,3 +45,22 @@ $("#add-train-btn").on("click", function(event) {
     $("#first-input").val("");
     $("#frequency-input").val("");
 });
+
+// Create Firebase Event to Add Train to Database & a Row Table
+database.ref().on("child_added",function(childSnapshot) {
+    console.log(childSnapshot.val());
+
+    // Store Items into a Variable
+    var trnName = childSnapshot.val().name;
+    var trnDest = childSnapshot.val().destination;
+    var trnFirst = childSnapshot.val().start;
+    var trnFreq = childSnapshot.val().frequency;
+
+    // Log Train Info from Database
+    console.log("Database: " + trnName);
+    console.log("Database: " + trnDest);
+    console.log("Database: " + trnFirst);
+    console.log("Database: " + trnFreq);
+
+    Make 
+});
