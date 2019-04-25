@@ -18,7 +18,9 @@ $("#add-train-btn").on("click", function(event) {
     // Grabs User Input
     var trnName = $("#train-name-input").val().trim();
     var trnDest = $("#destination-input").val().trim();
-    var trnFirst = moment($("#first-input").val().trim(), "HH:mm").format("X");
+    // var trnFirst = moment($("#first-input").val().trim(), "HH:mm").format("X");
+    // attempt in 24-hour time
+    var trnFirst = moment($("#first-input").val().trim(), "HH:mm").format("HH:mm");
     var trnFreq = $("#frequency-input").val().trim();
 
     // Create Local/Temporary Object to hold Train Data
@@ -63,22 +65,29 @@ database.ref().on("child_added",function(childSnapshot) {
     console.log("Database: " + trnFreq);
 
     // CALCULATE NEXT ARRIVAL
-
     // Push value of trnFirst back a year to ensure it's before current time, NECESSARY?
-    var trnFirstCnvrt = moment(trnFirst, "X").subtract(1,"years");
+    // var trnFirstCnvrt = moment(trnFirst, "X").subtract(1,"years");
     // UNSURE IF WORKING APPROPRIATELY
+    // console.log("1 Yr Back= " + trnFirstCnvrt);
+
+    // test in 24-hour time
+    var trnFirstCnvrt = moment(trnFirst, "HH:mm").subtract(1,"years");
     console.log("1 Yr Back= " + trnFirstCnvrt);
 
     // Current Time
+    // var currentTime = moment();
+    // console.log("CURRENTLY: " + moment(currentTime).format("X"));
+
+    // Current Time test in 24-hour time
     var currentTime = moment();
-    console.log("CURRENTLY: " + moment(currentTime).format("X"));
+    console.log("CURRENTLY: " + moment(currentTime).format("HH:mm"));
 
     // Difference Between Times
     var timeDiff = moment().diff(moment(trnFirstCnvrt), "minutes");
     console.log("DIFFERENCE IN TIME: " + timeDiff);
 
     // Time Apart
-    var tRemainder = moment(timeDiff).format("minutes") % trnFreq;
+    var tRemainder = timeDiff % trnFreq;
     // Console shows NaN
     console.log(tRemainder);
 
@@ -91,7 +100,6 @@ database.ref().on("child_added",function(childSnapshot) {
     console.log("ARRIVAL TIME: " + moment(nxtTrain).format("HH:mm"));
 
     // ADD DATA TO TABLE
-
     // Create New Row
     var newRow = $("<tr>").append(
         $("<td>").text(trnName),
