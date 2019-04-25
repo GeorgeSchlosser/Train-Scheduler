@@ -3,6 +3,7 @@ var config = {
     apiKey: "AIzaSyBXE_jCyyxKzd6sCnklhA_QDaC0JVt2wAY",
     authDomain: "train-scheduler-79eab.firebaseapp.com",
     databaseURL: "https://train-scheduler-79eab.firebaseio.com",
+    projectId: "train-scheduler-79eab",
     storageBucket: "train-scheduler-79eab.appspot.com"
 };
 
