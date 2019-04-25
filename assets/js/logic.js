@@ -96,7 +96,7 @@ database.ref().on("child_added",function(childSnapshot) {
     console.log("MINUTES TILL TRAIN: " + minutesTillArrival);
 
     // Next Train
-    var nxtTrain = moment().add(minutesTillArrival, "minutes");
+    var nxtTrain = (moment().add(minutesTillArrival, "minutes")).format("HH:mm");
     console.log("ARRIVAL TIME: " + moment(nxtTrain).format("HH:mm"));
 
     // ADD DATA TO TABLE
