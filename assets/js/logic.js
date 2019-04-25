@@ -62,7 +62,7 @@ database.ref().on("child_added",function(childSnapshot) {
     console.log("Database: " + trnFirst);
     console.log("Database: " + trnFreq);
 
-    // Calculate Next Arrival
+    // CALCULATE NEXT ARRIVAL
 
     // Push value of trnFirst back a year to ensure it's before current time, NECESSARY?
     var trnFirstCnvrt = moment(trnFirst, "X").subtract(1,"years");
@@ -90,5 +90,17 @@ database.ref().on("child_added",function(childSnapshot) {
     var nxtTrain = moment().add(minutesTillArrival, "minutes");
     console.log("ARRIVAL TIME: " + moment(nxtTrain).format("HH:mm"));
 
+    // ADD DATA TO TABLE
 
+    // Create New Row
+    var newRow = $("<tr>").append(
+        $("<td>").text(trnName),
+        $("<td>").text(trnDest),
+        $("<td>").text(trnFreq),
+        $("<td>").text(nxtTrain),
+        $("<td>").text(minutesTillArrival),
+    );
+
+    // Append New Row to Table
+    $("#train-table > tbody").append(newRow);
 });
